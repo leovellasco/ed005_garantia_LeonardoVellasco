@@ -1,59 +1,74 @@
+# Módulo database.py Responsável por gerenciar a conexão com o banco de dados PostgreSQL e executar consultas SQL
+
 import psycopg2
 
 
 class Database:
     """
-    Classe responsável por gerenciar a conexão com o banco de dados PostgreSQL e realizar operações CRUD.
+    Classe responsável pela conexão e execução de comandos SQL no PostgreSQL.
+
+    Métodos:
+        - consultar(query): executa uma consulta SELECT e retorna os resultados.
+        - executar(query, params): executa INSERT, UPDATE ou DELETE.
+        - fechar_conexao(): encerra a conexão com o banco.
     """
 
     def __init__(self):
+        """Inicializa a conexão com o banco de dados PostgreSQL."""
         try:
             self.conn = psycopg2.connect(
-                dbname="app_garantia",  # Nome do banco de dados
-                user="postgres",        # Usuário do banco de dados
-                password="root",   # Senha do banco de dados
-                host="localhost",       # Host do banco de dados
-                port="5432"             # Porta do banco de dados
+                dbname="app_garantia",
+                user="postgres",
+                password="root",
+                host="localhost",
+                port="5432"
             )
-            self.conn.autocommit = True  # Ativa o autocommit, importante para a persistência
-            print("Conexão com o banco de dados estabelecida com sucesso!")
+            print("✅ Conexão com o banco de dados estabelecida com sucesso.")
         except Exception as e:
-            print(f"Erro ao conectar ao banco de dados: {e}")
-            raise
+            print("❌ Erro ao conectar ao banco de dados:", e)
+            self.conn = None
 
     def consultar(self, query):
         """
-        Executa uma consulta SQL no banco de dados e retorna os resultados.
-        :param query: A consulta SQL a ser executada.
-        :return: Resultado da consulta (uma lista de tuplas).
+        Executa uma consulta SELECT e retorna o resultado como lista de tuplas.
         """
+        if not self.conn:
+            print("Conexão não estabelecida.")
+            return []
+
+        cur = self.conn.cursor()
         try:
-            cur = self.conn.cursor()
             cur.execute(query)
-            resultado = cur.fetchall()
-            return resultado
+            resultados = cur.fetchall()
+            return resultados
         except Exception as e:
-            print(f"Erro na consulta: {e}")
+            print("❌ Erro na consulta:", e)
+            return []
         finally:
             cur.close()
 
-    def executar(self, query):
+    def executar(self, query, params=None):
         """
-        Executa uma consulta SQL de alteração no banco de dados (INSERT, UPDATE, DELETE).
-        :param query: A consulta SQL a ser executada.
+        Executa comandos de modificação de dados (INSERT, UPDATE, DELETE).
+        Usa commit automático para persistir as alterações.
         """
+        if not self.conn:
+            print("Conexão não estabelecida.")
+            return
+
+        cur = self.conn.cursor()
         try:
-            cur = self.conn.cursor()
-            cur.execute(query)
+            cur.execute(query, params)
+            self.conn.commit()
+            print("✅ Comando executado com sucesso.")
         except Exception as e:
-            print(f"Erro na execução da consulta: {e}")
+            self.conn.rollback()
+            print("❌ Erro ao executar comando:", e)
         finally:
             cur.close()
 
-    def close(self):
-        """
-        Fecha a conexão com o banco de dados.
-        """
+    def fechar_conexao(self):
+        """Fecha a conexão com o banco."""
         if self.conn:
             self.conn.close()
-            print("Conexão com o banco de dados fechada.")
+            print("🔒 Conexão com o banco de dados encerrada.")

@@ -1,50 +1,48 @@
+# Módulo principal da aplicação - Demonstra o uso da classe Database para consultar dados do banco e exibir informações
+
 from database import Database
 
 
-def consultar_equipamentos_com_garantias():
-    """
-    Consulta equipamentos e suas garantias no banco de dados e imprime os resultados de forma legível.
-    """
-    # Estabelece a conexão com o banco de dados
+def main():
+    # Instancia o objeto de conexão
     db = Database()
 
-    # Definindo a consulta SQL que retorna equipamentos e suas garantias
+    # Consulta: equipamentos e suas garantias associadas
     query = """
-    SELECT
-        e.nome AS equipamento,
-        e.marca,
-        e.modelo,
-        e.numero_serie,
-        e.preco,
-        g.data_inicio,
-        g.data_fim,
-        g.descricao AS garantia_descricao
-    FROM
-        equipamento e
-    JOIN
-        garantia g ON e.id_equipamento = g.id_equipamento
-    ORDER BY
-        e.nome;
+        SELECT 
+            e.id_equip,
+            e.nome_equip,
+            e.marca,
+            e.modelo,
+            g.id_garantia,
+            g.tipo_garantia,
+            g.data_inicio,
+            g.data_fim
+        FROM equipamentos e
+        JOIN garantia g ON e.id_equip = g.id_equip
+        ORDER BY e.nome_equip;
     """
 
-    # Executando a consulta e pegando os resultados
     resultados = db.consultar(query)
 
-    # Imprimindo os resultados de forma legível
-    print("Equipamentos e Garantias:\n")
-    for resultado in resultados:
-        equipamento, marca, modelo, numero_serie, preco, data_inicio, data_fim, garantia_descricao = resultado
-        print(f"Equipamento: {equipamento} ({marca} {modelo})")
-        print(f"  Número de Série: {numero_serie}")
-        print(f"  Preço: R${preco:.2f}")
-        print(f"  Garantia: {garantia_descricao}")
-        print(f"  Período: {data_inicio} até {data_fim}")
-        print("-" * 50)
+    # Exibição dos resultados
+    print("\n=== 📋 Lista de Equipamentos e Garantias ===")
+    if not resultados:
+        print("Nenhum registro encontrado.")
+    else:
+        for row in resultados:
+            id_equip, nome, marca, modelo, id_gar, tipo, inicio, fim = row
+            print(f"""
+----------------------------------------
+Equipamento: {nome} ({marca} {modelo})
+ID Equip: {id_equip}
+Garantia: {tipo} (ID: {id_gar})
+Início: {inicio} | Fim: {fim}
+""")
 
-    # Fechar a conexão
-    db.close()
+    # Fecha conexão ao final
+    db.fechar_conexao()
 
 
-# Executando a função no programa principal
 if __name__ == "__main__":
-    consultar_equipamentos_com_garantias()
+    main()
