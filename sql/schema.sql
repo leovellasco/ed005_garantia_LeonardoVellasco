@@ -76,6 +76,7 @@ CREATE TABLE garantia (
 -- =========================================================
 -- TABELA: documento
 -- =========================================================
+
 CREATE TABLE documento (
     id_documento    SERIAL PRIMARY KEY,
     url             VARCHAR(255) NOT NULL,

@@ -27,6 +27,7 @@ VALUES
 ('Notebook Dell Inspiron 15', '2023-01-15', 'Dell', 'Inspiron 15 3000', 'SN123456', 3500.00, 1, 1),
 ('Smartphone Samsung Galaxy S22', '2023-03-10', 'Samsung', 'Galaxy S22', 'SN987654', 4200.00, 2, 2),
 ('Impressora HP LaserJet 1020', '2023-05-25', 'HP', 'LaserJet 1020', 'SN567890', 900.00, 3, 3);
+
 -- =========================================================
 -- INSERÇÕES NA TABELA: garantia
 -- =========================================================
