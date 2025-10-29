@@ -24,7 +24,7 @@ Pode estar ligado a uma loja, equipamento e/ou garantia.
 ### Entidade Usuário
 ---
 ```
-Atributo             Tipo de dado        Justificativa
+Atributo             Tipo de dado       Justificativa
 
 id_usuario	         SERIAL (PK)	    Identificador único do usuário.
 nome_usuario	     VARCHAR(100)	    Nome completo do usuário.
