@@ -33,7 +33,8 @@ status	             VARCHAR(10)	    Indica se o usuário está ativo ou inativo.
 senha	             VARCHAR(255)	    Armazena a senha criptografada.
 ```
 ### Entidade Loja	
----     
+---   
+```  
 Atributo	       
 id_loja	            SERIAL (PK)	        Identificador único da loja.
 nome_loja	        VARCHAR(100)	    Nome do estabelecimento.
@@ -42,10 +43,11 @@ endereco_loja	    VARCHAR(200)	    Endereço físico da loja.
 telefone_loja   	VARCHAR(20)	        Contato comercial.
 email_loja	        VARCHAR(150)	    Comunicação eletrônica.
 id_usuario	        INT (FK)	        Liga a loja ao usuário responsável.
-
+```
 
 ### Entidade Equipamento
----	       
+---	  
+```     
 Atributo           
 id_equip        	SERIAL (PK)	        Identificador único do equipamento.
 nome_equip	        VARCHAR(100)	    Nome ou descrição do equipamento.
@@ -56,10 +58,11 @@ numero_serie	    VARCHAR(100)	    Número de série, usado para rastreamento.
 preco	            NUMERIC(10,2)	    Valor de compra.
 id_loja	            INT (FK)	        Loja onde foi comprado.
 id_usuario	        INT (FK)	        Dono do equipamento.
-
+```
 
 ### Entidade Garantia	
----     
+---   
+```  
 Atributo	        
 id_garantia	        SERIAL (PK)	        Identificador único da garantia.
 data_inicio	        DATE	            Início da validade da garantia.
@@ -67,9 +70,10 @@ data_fim	        DATE	            Fim da cobertura.
 tipo_garantia	    VARCHAR(20)	        Classifica a garantia (fabricante, loja, estendida).
 id_equip	        INT (FK)	        Equipamento vinculado.
 id_usuario	        INT (FK)	        Usuário responsável.
-
+```
 ### Entidade Documento	
 --- 
+```
 Atributo	        
 id_documento	    SERIAL (PK)	        Identificador único do documento.
 url	                VARCHAR(255)	    Caminho ou link para o arquivo.
@@ -79,7 +83,7 @@ data_emissao	    DATE	            Data de emissão do documento.
 id_loja	            INT (FK, opcional)	Loja relacionada.
 id_equip	        INT (FK, opcional)	Equipamento vinculado.
 id_garantia     	INT (FK, opcional)	Garantia vinculada.
-
+```
 
 ## Chaves primárias e estrangeiras.
 ```
