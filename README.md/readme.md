@@ -24,6 +24,8 @@ Pode estar ligado a uma loja, equipamento e/ou garantia.
 ### Entidade Usuário
 ---
 ```
+Atributo             Tipo de dado        Justificativa
+
 id_usuario	         SERIAL (PK)	    Identificador único do usuário.
 nome_usuario	     VARCHAR(100)	    Nome completo do usuário.
 cpf	                 CHAR(11)	        Identificação única no sistema.
@@ -35,7 +37,8 @@ senha	             VARCHAR(255)	    Armazena a senha criptografada.
 ### Entidade Loja	
 ---   
 ```  
-Atributo	       
+Atributo            Tipo de dado        Justificativa	 
+
 id_loja	            SERIAL (PK)	        Identificador único da loja.
 nome_loja	        VARCHAR(100)	    Nome do estabelecimento.
 cnpj	            CHAR(14)	        Identificação fiscal única.
@@ -48,7 +51,8 @@ id_usuario	        INT (FK)	        Liga a loja ao usuário responsável.
 ### Entidade Equipamento
 ---	  
 ```     
-Atributo           
+Atributo            Tipo de dado        Justificativa
+
 id_equip        	SERIAL (PK)	        Identificador único do equipamento.
 nome_equip	        VARCHAR(100)	    Nome ou descrição do equipamento.
 data_aquisicao	    DATE	            Data de compra.
@@ -63,7 +67,8 @@ id_usuario	        INT (FK)	        Dono do equipamento.
 ### Entidade Garantia	
 ---   
 ```  
-Atributo	        
+Atributo            Tipo de dado        Justificativa
+
 id_garantia	        SERIAL (PK)	        Identificador único da garantia.
 data_inicio	        DATE	            Início da validade da garantia.
 data_fim	        DATE	            Fim da cobertura.
@@ -74,7 +79,8 @@ id_usuario	        INT (FK)	        Usuário responsável.
 ### Entidade Documento	
 --- 
 ```
-Atributo	        
+Atributo            Tipo de dado        Justificativa
+
 id_documento	    SERIAL (PK)	        Identificador único do documento.
 url	                VARCHAR(255)	    Caminho ou link para o arquivo.
 tipo_doc	        VARCHAR(20)	        Tipo de documento (nota fiscal, certificado, outro).
@@ -88,6 +94,7 @@ id_garantia     	INT (FK, opcional)	Garantia vinculada.
 ## Chaves primárias e estrangeiras.
 ```
 Entidade	         PK	           FKs	                             Relaciona-se com
+
 usuario	        id_usuario      	—                        	            —
 loja	        id_loja	        id_usuario	                         usuario(id_usuario)
 equipamento     id_equip	    id_loja, id_usuario	                 loja(id_loja), usuario(id_usuario)
